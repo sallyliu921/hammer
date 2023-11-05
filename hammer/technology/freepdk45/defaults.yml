@@ -1,0 +1,53 @@
+# Settings for  nangate15 technology to be overriden by project
+# Technology Setup
+# Technology used is NANGATE 15
+technology.freepdk45:
+  tarball_dir: "/research/d1/gds/fzliu23/PDK/freepdk45/"
+# Specify PDK and std cell install directories
+  pdk_install_dir: "/research/d1/gds/fzliu23/PDK/freepdk45/"
+  stdcell_install_dir: "/research/d1/gds/fzliu23/PDK/freepdk45/"
+
+vlsi.core.synthesis: hammer.synthesis.genus
+vlsi.core.max_threads: 12
+
+# Set some defaults for this technology.
+# NOTE: there are no tapcells in nangate15
+# NOTE: there is only 1 TT corner
+vlsi:
+  core:
+    technology: hammer.technology.freepdk45
+    node: 15 # Technology dimension
+  inputs:
+    supplies: # Supply voltages
+      VDD: "1.1 V"
+      GND: "25 V"
+    mmmc_corners: [
+    {
+      "name": "PVT_0P95V_125C",
+      "type": "setup",
+      "voltage": "0.95 V",
+      "temp": "125 C"
+    },
+    {
+      "name": "PVT_1P25V_0C",
+      "type": "hold",
+      "voltage": "1.25 V",
+      "temp": "0 C"
+    }] # mmmc corners config. 
+  technology:
+    placement_site: "stdcells" # Set standard cell LEF placement site
+
+# Specify clock signals
+# vlsi.inputs.clocks: [
+#   {name: "clk", period: "0.5ns", uncertainty: "0.1ns"}
+# ]
+
+# Generate Make include to aid in flow 
+vlsi.core.build_system: make
+
+technology.core:
+  stackup: "freepdk45" # This key should exist in the stackups list in the tech json
+  std_cell_rail_layer: "metal1" # This should specify the TOPMOST metal layer the 
+  # standard cells use for power rails
+  # Note that this is not usually stackup specific; 
+  # it is based on the std cell libraries themselves

@@ -1,0 +1,4 @@
+technology.FreePDK3:
+  tarball_dir: str
+  pdk_install_dir: str
+  stdcell_install_dir: str

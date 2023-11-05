@@ -1,15 +1,19 @@
 # Settings for the asap7 technology to be overriden by the project.
 technology.asap7:
-  tarball_dir: "libs" # Path to the directory which contains the asap7 Calibre decks tarball (i.e. ASAP7_PDK_CalibreDeck.tar)
-  pdk_install_dir: "${technology.asap7.tarball_dir}/asap7PDK_r1p7" # Path to the directory containing the PDK files
+  tarball_dir: "/research/d1/gds/fzliu23/PDK/asap7" # Path to the directory which contains the asap7 Calibre decks tarball (i.e. ASAP7_PDK_CalibreDeck.tar)
+  pdk_install_dir: "/research/d1/gds/fzliu23/PDK/asap7/asap7PDK_r1p7" # Path to the directory containing the PDK files
   pdk_install_dir_meta: lazysubst
-  stdcell_install_dir: "${technology.asap7.tarball_dir}/asap7sc7p5t_27" # Path to the directory containing the standard cell collateral
+  stdcell_install_dir: "/research/d1/gds/fzliu23/PDK/asap7/asap7sc7p5t_27" # Path to the directory containing the standard cell collateral
   stdcell_install_dir_meta: lazysubst
 
+vlsi.core.synthesis: hammer.synthesis.genus
+vlsi.core.max_threads: 12
 # Set some defaults for this technology.
 # For quick performance evaluations, use the typical voltage+temperature corners.
 vlsi:
-  core.node: 28 # Technology dimension
+  core:
+    node: 28 # Technology dimension
+    technology: hammer.technology.asap7
   # The PaR tool actually runs in the 4x scaled up lef/gds.
   # after PaR, post_par_script in asap7/__init__.py will scale down the generated gds to 7nm.
   inputs:

@@ -1,0 +1,113 @@
+{
+  "name": "FreePDK3 Library",
+  "grid_unit": "0.001",
+  "time_unit": "1 ps",
+  "installs": [{
+    "id": "$PDK",
+    "path": "technology.Nangate15.pdk_install_dir"
+  },
+  {
+    "id": "$STDCELLS",
+    "path": "technology.Nangate15.stdcell_install_dir"
+  }
+],
+
+  "libraries": [{
+    "lef_file": "$STDCELLS/back_end/lef/NanGate_15nm_OCL.tech.lef",
+    "provides": [{"lib_type": "technology"}]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/front_end/timing_power_noise/NLDM/NanGate_15nm_OCL_typical_conditional_nldm.lib",
+    "lef_file": "$STDCELLS/back_end/lef/NanGate_15nm_OCL.macro.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "0.80 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/front_end/timing_power_noise/NLDM/NanGate_15nm_OCL_slow_conditional_nldm.lib",
+    "lef_file": "$STDCELLS/back_end/lef/NanGate_15nm_OCL.macro.lef",
+    "corner": {
+      "nmos": "slow",
+      "pmos": "slow",
+      "temperature": "125 C"
+    },
+    "supplies": {
+      "VDD": "0.72 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/front_end/timing_power_noise/NLDM/NanGate_15nm_OCL_fast_conditional_nldm.lib",
+    "lef_file": "$STDCELLS/back_end/lef/NanGate_15nm_OCL.macro.lef",
+    "corner": {
+      "nmos": "fast",
+      "pmos": "fast",
+      "temperature": "0 C"
+    },
+    "supplies": {
+      "VDD": "0.88 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  }
+],
+  "stackups": [{
+    "name": "Nangate15",
+    "grid_unit": 0.001,
+    "metals": [{
+      "name": "M1", "index": 1, "direction": "vertical", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    },{
+      "name": "MINT1", "index": 2, "direction": "horizontal", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    },{
+      "name": "MINT2", "index": 3, "direction": "vertical", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    },{
+      "name": "MINT3", "index": 4, "direction": "horizontal", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    },{
+      "name": "MINT4", "index": 5, "direction": "vertical", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    },{
+      "name": "MINT5", "index": 6, "direction": "horizontal", 
+      "min_width": 0.028, "max_width": 1073741, "pitch": 0.064, 
+      "offset": 0.032, "power_strap_widths_and_spacings": [], "grid_unit": 0.001
+    }]
+  }],
+  "sites": [
+    {"name": "NanGate_15nm_OCL", "x": 0.064, "y": 0.768} 
+  ],
+  "physical_only_cells_list": [
+    "FILL_X1","FILL_X2","FILL_X4","FILL_X8","FILL_X16"
+  ],
+  "special_cells": [
+    {"cell_type": "stdfiller", "name": [
+      "FILL_X1","FILL_X2","FILL_X4","FILL_X8","FILL_X16"]},
+    {"cell_type": "tiehicell", "name": ["TIEH"], "output_ports": ["Z"]},
+    {"cell_type": "tielocell", "name": ["TIEL"], "output_ports": ["Z"]},
+    {"cell_type": "driver", "name": ["BUF_X1", "BUF_X2", "BUF_X4", "BUF_X8", "BUF_X16"], "input_ports": ["I"], "output_ports":  ["Z"]}
+  ]
+}

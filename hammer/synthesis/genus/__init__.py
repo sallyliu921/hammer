@@ -106,7 +106,11 @@ class Genus(HammerSynthesisTool, CadenceTool):
     def do_between_steps(self, prev: HammerToolStep, next: HammerToolStep) -> bool:
         assert super().do_between_steps(prev, next)
         # Write a checkpoint to disk.
-        self.verbose_append("write_db -to_file pre_{step}".format(step=next.name))
+        if self.version() >= self.version_number("221"):
+            # -common now enables database reading in Innovus
+            self.verbose_append("write_db -common -to_file pre_{step}".format(step=next.name))
+        else:
+            self.verbose_append("write_db -to_file pre_{step}".format(step=next.name))
         return True
 
     def do_post_steps(self) -> bool:
@@ -194,9 +198,10 @@ class Genus(HammerSynthesisTool, CadenceTool):
         # Clock gating setup
         if self.get_setting("synthesis.clock_gating_mode") == "auto":
             verbose_append("set_db lp_clock_gating_infer_enable  true")
-            # Genus will create instances named CLKGATE_foo, CLKGATE_bar, etc.
+            # Innovus will create instances named CLKGATE_foo, CLKGATE_bar, etc.
             verbose_append("set_db lp_clock_gating_prefix  {CLKGATE}")
             verbose_append("set_db lp_insert_clock_gating  true")
+            verbose_append("set_db lp_insert_clock_gating_incremental true")
             verbose_append("set_db lp_clock_gating_register_aware true")
 
         # Set up libraries.
@@ -250,16 +255,15 @@ class Genus(HammerSynthesisTool, CadenceTool):
                 verbose_append("set_db module:{top}/{mod} .preserve true".format(top=self.top_module, mod=ilm.module))
         verbose_append("init_design -top {}".format(self.top_module))
 
-        # Setup power settings from cpf/upf
-        # Difference from other tools: apply_power_intent after read
-        power_cmds = self.generate_power_spec_commands()
-        power_cmds.insert(1, "apply_power_intent -summary")
-        for l in power_cmds:
-            verbose_append(l)
-
         # Prevent floorplanning targets from getting flattened.
         # TODO: is there a way to track instance paths through the synthesis process?
         verbose_append("set_db root: .auto_ungroup none")
+
+        # Set units to pF and technology time unit.
+        # Must be done after elaboration.
+        verbose_append("set_units -capacitance 1.0pF")
+        verbose_append("set_load_unit -picofarads 1")
+        verbose_append("set_units -time 1.0{}".format(self.get_time_unit().value_prefix + self.get_time_unit().unit))
 
         # Set "don't use" cells.
         for l in self.generate_dont_use_commands():
@@ -283,24 +287,6 @@ class Genus(HammerSynthesisTool, CadenceTool):
         return True
 
     def syn_generic(self) -> bool:
-        # Add clock mapping flow if special cells are specified
-        if self.version() >= self.version_number("211"):
-            buffer_cells = self.technology.get_special_cell_by_type(CellType.CTSBuffer)
-            if len(buffer_cells) > 0:
-                self.append(f"set_db cts_buffer_cells {{{' '.join(buffer_cells[0].name)}}}")
-            inverter_cells = self.technology.get_special_cell_by_type(CellType.CTSInverter)
-            if len(inverter_cells) > 0:
-                self.append(f"set_db cts_inverter_cells {{{' '.join(inverter_cells[0].name)}}}")
-            gate_cells = self.technology.get_special_cell_by_type(CellType.CTSGate)
-            if len(gate_cells) > 0:
-                self.append(f"set_db cts_clock_gating_cells {{{' '.join(gate_cells[0].name)}}}")
-            logic_cells = self.technology.get_special_cell_by_type(CellType.CTSLogic)
-            if len(logic_cells) > 0:
-                self.append(f"set_db cts_logic_cells {{{' '.join(logic_cells[0].name)}}}")
-            # if any(c > 0 for c in [len(buffer_cells), len(inverter_cells), len(gate_cells), len(logic_cells)]):
-            if len(inverter_cells) > 0 and len(logic_cells) > 0:
-                # Clock mapping needs at least the attributes cts_inverter_cells and cts_logic_cells to be set
-                self.append("set_db map_clock_tree true")
         self.verbose_append("syn_generic")
         return True
 
@@ -362,10 +348,7 @@ class Genus(HammerSynthesisTool, CadenceTool):
         verbose_append("write_hdl > {}".format(self.mapped_v_path))
         if self.hierarchical_mode.is_nonleaf_hierarchical() and self.version() >= self.version_number("191"):
             verbose_append("write_hdl -exclude_ilm > {}".format(self.mapped_hier_v_path))
-        if self.version() >= self.version_number("221"):
-            verbose_append("write_template -full -outfile {}.mapped.scr".format(top))
-        else:
-            verbose_append("write_script > {}.mapped.scr".format(top))
+        verbose_append("write_script > {}.mapped.scr".format(top))
         corners = self.get_mmmc_corners()
         if corners:
             # First setup corner is default view

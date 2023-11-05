@@ -1,0 +1,232 @@
+{
+  "name": "Nangate45 Library",
+  "grid_unit": "0.005",
+  "time_unit": "1 ps",
+  "installs": [{
+    "id": "$PDK",
+    "path": "technology.Nangate45.pdk_install_dir"
+  },
+  {
+    "id": "$STDCELLS",
+    "path": "technology.Nangate45.stdcell_install_dir"
+  }
+],
+
+  "libraries": [{
+    "lef_file": "$STDCELLS/Nangate45_tech.lef",
+    "provides": [{"lib_type": "technology"}]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/Nangate45_typ.lib",
+    "lef_file": "$STDCELLS/Nangate45_stdcell.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "1.10 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/Nangate45_slow.lib",
+    "lef_file": "$STDCELLS/Nangate45_stdcell.lef",
+    "corner": {
+      "nmos": "slow",
+      "pmos": "slow",
+      "temperature": "125 C"
+    },
+    "supplies": {
+      "VDD": "0.95 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/Nangate45_fast.lib",
+    "lef_file": "$STDCELLS/Nangate45_stdcell.lef",
+    "corner": {
+      "nmos": "fast",
+      "pmos": "fast",
+      "temperature": "0 C"
+    },
+    "supplies": {
+      "VDD": "1.25 V",
+      "GND": "0 V"
+    },
+    "provides": [{
+      "lib_type": "stdcell",
+      "vt": "SVT"
+    }]
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/fake_macros.lib",
+    "lef_file": "$STDCELLS/fake_macros.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "1.1 V",
+      "GND": "0 V"
+    }
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/fakeram45_64x7.lib",
+    "lef_file": "$STDCELLS/fakeram45_64x7.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "1.1 V",
+      "GND": "0 V"
+    }
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/fakeram45_64x32.lib",
+    "lef_file": "$STDCELLS/fakeram45_64x32.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "1.1 V",
+      "GND": "0 V"
+    }
+  },
+  {
+    "nldm_liberty_file": "$STDCELLS/fakeram45_1024x32.lib",
+    "lef_file": "$STDCELLS/fakeram45_1024x32.lef",
+    "corner": {
+      "nmos": "typical",
+      "pmos": "typical",
+      "temperature": "25 C"
+    },
+    "supplies": {
+      "VDD": "1.1 V",
+      "GND": "0 V"
+    }
+  }
+],
+  "stackups": [{
+    "name": "Nangate45",
+    "grid_unit": 0.005,
+    "metals": [{
+      "name": "metal1", "index": 1, "direction": "horizontal", 
+      "min_width": 0.07, "max_width": 1073741, "pitch": 0.14, 
+      "offset": 0.07, "power_strap_widths_and_spacings": [], "grid_unit": 0.005
+    },{
+      "name": "metal2", "index": 2, "direction": "vertical", 
+      "min_width": 0.07, "max_width": 1073741, "pitch": 0.14, 
+      "offset": 0.095, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.07}, 
+        {"width_at_least": 0.09, "min_spacing": 0.09}, 
+        {"width_at_least": 0.27, "min_spacing": 0.27}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal3", "index": 3, "direction": "horizontal", 
+      "min_width": 0.07, "max_width": 1073741, "pitch": 0.14, 
+      "offset": 0.07, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.07}, 
+        {"width_at_least": 0.09, "min_spacing": 0.09}, 
+        {"width_at_least": 0.27, "min_spacing": 0.27}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal4", "index": 4, "direction": "vertical", 
+      "min_width": 0.14, "max_width": 1073741, "pitch": 0.28, 
+      "offset": 0.095, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.14}, 
+        {"width_at_least": 0.27, "min_spacing": 0.27}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal5", "index": 5, "direction": "horizontal", 
+      "min_width": 0.14, "max_width": 1073741, "pitch": 0.28, 
+      "offset": 0.07, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.14}, 
+        {"width_at_least": 0.27, "min_spacing": 0.27}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal6", "index": 6, "direction": "vertical", 
+      "min_width": 0.14, "max_width": 1073741, "pitch": 0.28, 
+      "offset": 0.095, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.14}, 
+        {"width_at_least": 0.27, "min_spacing": 0.27}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal7", "index": 7, "direction": "horizontal", 
+      "min_width": 0.4, "max_width": 1073741, "pitch": 0.8, 
+      "offset": 0.07, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.4}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal8", "index": 8, "direction": "vertical", 
+      "min_width": 0.4, "max_width": 1073741, "pitch": 0.8, 
+      "offset": 0.095, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.4}, 
+        {"width_at_least": 0.5, "min_spacing": 0.5}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal9", "index": 9, "direction": "horizontal", 
+      "min_width": 0.8, "max_width": 1073741, "pitch": 1.6, 
+      "offset": 0.07, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.8}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    },{
+      "name": "metal10", "index": 10, "direction": "vertical", 
+      "min_width": 0.8, "max_width": 1073741, "pitch": 1.6, 
+      "offset": 0.095, "power_strap_widths_and_spacings": [
+        {"width_at_least": 0.0, "min_spacing": 0.8}, 
+        {"width_at_least": 0.9, "min_spacing": 0.9}, 
+        {"width_at_least": 1.5, "min_spacing": 1.5}
+      ], "grid_unit": 0.005
+    }]
+  }],
+  "sites": [
+    {"name": "FreePDK45_38x28_10R_NP_162NW_34O", "x": 0.19, "y": 1.4} 
+  ],
+  "physical_only_cells_list": [
+    "FILL_X1","FILL_X2","FILL_X4","FILL_X8","FILL_X16"
+  ],
+  "special_cells": [
+    {"cell_type": "stdfiller", "name": [
+      "FILL_X1","FILL_X2","FILL_X4","FILL_X8","FILL_X16"]},
+    {"cell_type": "tiehicell", "name": ["TIEH"], "output_ports": ["Z"]},
+    {"cell_type": "tielocell", "name": ["TIEL"], "output_ports": ["Z"]},
+    {"cell_type": "driver", "name": ["BUF_X1", "BUF_X2", "BUF_X4", "BUF_X8", "BUF_X16"], "input_ports": ["I"], "output_ports":  ["Z"]}
+  ]
+  
+}

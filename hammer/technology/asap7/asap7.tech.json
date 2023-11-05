@@ -1,6 +1,7 @@
 {
   "name": "ASAP7 Library",
   "grid_unit": "0.001",
+  "time_unit": "1 ps",
   "installs": [
     {
       "id": "$PDK",
@@ -22,7 +23,7 @@
     }
   ],
 
-  "gds_map_file": "$PDK/cdslib/asap7_TechLib/asap7_fromAPR.layermap",
+  "gds_map_file": "$PDK/cdslib/asap7_TechLib_10/asap7_fromAPR_08b.layermap",
 
   "drc_decks": [
     {

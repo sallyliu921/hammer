@@ -18,7 +18,7 @@ from hammer.vlsi import HammerTool, HammerPlaceAndRouteTool, TCLTool, HammerDRCT
 import hammer.tech.specialcells as specialcells
 from hammer.tech.specialcells import CellType, SpecialCell
 
-class SKY130Tech(HammerTechnology):
+class sky130Tech(HammerTechnology):
     """
     Override the HammerTechnology used in `hammer_tech.py`
     This class is loaded by function `load_from_json`, and will pass the `try` in `importlib`.
@@ -43,7 +43,6 @@ class SKY130Tech(HammerTechnology):
         setting_dir = self.get_setting("technology.sky130.sky130A")
         setting_dir = Path(setting_dir)
         source_path = setting_dir / 'libs.ref' / self.library_name / 'cdl' / f'{self.library_name}.cdl'
-        print("source_path:",source_path)
         if not source_path.exists():
             raise FileNotFoundError(f"CDL not found: {source_path}")
 
@@ -435,4 +434,4 @@ def sram22_lvs_recognize_gates_all(ht: HammerTool) -> bool:
         f.write("LVS RECOGNIZE GATES ALL")
     return True
 
-tech = SKY130Tech()
+tech = sky130Tech()
